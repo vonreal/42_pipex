@@ -18,7 +18,7 @@ void    check_argc(int argc, int min, int max)
     {
         if (argc < min)
         {
-            write(STDERR_FILENO, "Arguments too few.\n", 20);
+            //write(STDERR_FILENO, "Arguments too few.\n", 20);
             exit(-1);
         }
     }
@@ -26,7 +26,7 @@ void    check_argc(int argc, int min, int max)
     {
         if (argc > max)
         {
-            write(STDERR_FILENO, "Arguments too many.\n", 20);
+            //write(STDERR_FILENO, "Arguments too many.\n", 20);
             exit(-1);
         }
     }

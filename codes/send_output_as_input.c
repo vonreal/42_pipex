@@ -27,7 +27,7 @@ void	save_output_to_outfile(int *fd, int fd_outfile)
 	fd[WRITE] = fd_outfile;
 }
 
-void	send_output_as_input(t_info *infos, int idx, char *envp[]);
+void	send_output_as_input(t_info *infos, int idx, char *envp[])
 {
 	pid_t	pid;
 
@@ -40,7 +40,7 @@ void	send_output_as_input(t_info *infos, int idx, char *envp[]);
 	{
 		close(infos->fds[idx][READ]);
 		dup2(infos->fds[idx][WRITE], STDOUT_FILENO);
-		execve_cmd(infos->cmds[i], infos->paths);
+		execve_cmd(infos->cmds[idx], infos->paths, envp);
 		exit(-1);
 	}
 	else
@@ -51,7 +51,7 @@ void	send_output_as_input(t_info *infos, int idx, char *envp[]);
 	}
 }
 
-void	execve_cmd(char *cmd, char **paths)
+void	execve_cmd(char *cmd, char **paths, char *envp[])
 {
 	char	**cmds;
 	char	*path;
@@ -64,7 +64,7 @@ void	execve_cmd(char *cmd, char **paths)
 	i = 0;
 	while (paths[i])
 	{
-		path = ft_strjoin(infos->paths[i], "/");
+		path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(path, cmds[0]);
 		execve(path, cmds, envp);
 		i++;

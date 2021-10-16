@@ -21,8 +21,8 @@ SRCS = ./codes/pipex.c \
 	   ./codes/set_infos.c \
 	   ./codes/get_cmds.c \
 	   ./codes/get_fds.c \
+	   ./codes/send_output_as_input.c \
 	   ./codes/free_infos.c \
-	   ./codes/set_stdout_from_cmd.c \
 
 INCLUDE = ./headers
 

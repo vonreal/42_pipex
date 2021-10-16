@@ -42,5 +42,5 @@ int	pipex(t_info infos, char *envp[])
 		i++;
 	}
 	save_output_to_outfile(infos.fds[i], infos.fd_outfile);
-	set_stdout_from_cmd(&infos, i, envp);
+	send_output_as_input(&infos, i, envp);
 }

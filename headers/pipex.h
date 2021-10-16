@@ -43,7 +43,7 @@ int		get_size_char_arr2(char **arr2);
 int		pipex(t_info infos, char *envp[]);
 void	read_input_from_infile(int fd_infile);
 void	send_output_as_input(t_info *infos, int idx, char *envp[]);
-void	execve_cmd(char *cmd, char **paths);
+void	execve_cmd(char *cmd, char **paths, char *envp[]);
 void	save_output_to_outfile(int *fd, int fd_outfile);
 
 void	free_infos(t_info *infos);
