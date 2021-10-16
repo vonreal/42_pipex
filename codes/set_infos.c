@@ -6,7 +6,7 @@
 /*   By: jna <jna@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 21:47:35 by jna               #+#    #+#             */
-/*   Updated: 2021/10/16 16:17:46 by jna              ###   ########.fr       */
+/*   Updated: 2021/10/17 02:53:02 by jna              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,11 @@ void	set_fd(t_info *infos, char *infile, char *outfile)
 	int	fd_infile;
 	int	fd_outfile;
 
-	if ((fd_infile = open(infile, O_RDONLY)) < 0)
-	{
-		perror("File open error.\n");
-		exit(-1);
-	}
-	if ((fd_outfile = \
-			open(outfile, O_CREAT | O_TRUNC | O_WRONLY, 0644)) < 0)
-	{
-		perror("File open error.\n");
-		exit(-1);
-	}
+	fd_infile = open(infile, O_RDONLY);
+	fd_outfile = \
+			open(outfile, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	if (fd_infile < 0 || fd_outfile < 0)
+		exit(0);
 	infos->fd_infile = fd_infile;
 	infos->fd_outfile = fd_outfile;
 }
@@ -62,9 +56,6 @@ char	**get_paths(char *envp[])
 		i++;
 	}
 	if (paths == NULL)
-	{
-		write(STDERR_FILENO, "No 'PATH' in environment.\n", 27);
-		exit(-1);
-	}
+		exit(0);
 	return (paths);
 }

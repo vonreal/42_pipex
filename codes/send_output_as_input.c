@@ -6,7 +6,7 @@
 /*   By: jna <jna@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 01:40:36 by jna               #+#    #+#             */
-/*   Updated: 2021/10/16 16:15:25 by jna              ###   ########.fr       */
+/*   Updated: 2021/10/17 02:52:56 by jna              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 void	read_input_from_infile(int fd_infile)
 {
 	if (dup2(fd_infile, STDIN_FILENO) < 0)
-	{
-		perror("Fail to dup2().\n");
-		exit(-1);
-	}
+		exit(0);
 }
 
 void	save_output_to_outfile(int *fd, int fd_outfile)
@@ -31,17 +28,14 @@ void	send_output_as_input(t_info *infos, int idx, char *envp[])
 {
 	pid_t	pid;
 
-	if ((pid = fork()) < 0)
-	{
-		perror("Fail to fork().\n");
+	pid = fork();
+	if (pid < 0)
 		exit(-1);
-	}
 	if (pid == 0)
 	{
-		close(infos->fds[idx][READ]);
 		dup2(infos->fds[idx][WRITE], STDOUT_FILENO);
 		execve_cmd(infos->cmds[idx], infos->paths, envp);
-		exit(-1);
+		exit(0);
 	}
 	else
 	{
@@ -70,4 +64,3 @@ void	execve_cmd(char *cmd, char **paths, char *envp[])
 		i++;
 	}
 }
-

@@ -6,13 +6,13 @@
 /*   By: jna <jna@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 20:18:00 by jna               #+#    #+#             */
-/*   Updated: 2021/10/16 20:18:00 by jna              ###   ########.fr       */
+/*   Updated: 2021/10/17 02:52:43 by jna              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int main(int argc, char *argv[], char *envp[])
+int	main(int argc, char *argv[], char *envp[])
 {
 	t_info	infos;
 
@@ -23,7 +23,7 @@ int main(int argc, char *argv[], char *envp[])
 	return (0);
 }
 
-int	pipex(t_info infos, char *envp[])
+void	pipex(t_info infos, char *envp[])
 {
 	int	i;
 	int	size;
@@ -34,10 +34,7 @@ int	pipex(t_info infos, char *envp[])
 	while (i < size - 1)
 	{
 		if (pipe(infos.fds[i]) < 0)
-		{
-			perror("Fail to pipe().\n");
-			exit(-1);
-		}
+			exit(0);
 		send_output_as_input(&infos, i, envp);
 		i++;
 	}

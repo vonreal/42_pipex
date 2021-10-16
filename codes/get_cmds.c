@@ -6,7 +6,7 @@
 /*   By: jna <jna@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 23:26:29 by jna               #+#    #+#             */
-/*   Updated: 2021/10/16 23:26:29 by jna              ###   ########.fr       */
+/*   Updated: 2021/10/17 02:52:22 by jna              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@ static char	*ft_strjoins(char *src, char *append1, char *append2)
 	temp = src;
 	src = ft_strjoin(src, append1);
 	free(temp);
-
 	temp = src;
 	src = ft_strjoin(src, append2);
 	free(temp);
-
 	return (src);
 }
 
@@ -65,4 +63,3 @@ char	**get_cmds(int end, char *argv[])
 	free(cmd_line);
 	return (cmds);
 }
-

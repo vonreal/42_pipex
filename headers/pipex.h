@@ -6,7 +6,7 @@
 /*   By: jna <jna@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 15:53:58 by jna               #+#    #+#             */
-/*   Updated: 2021/10/16 16:06:13 by jna              ###   ########.fr       */
+/*   Updated: 2021/10/17 02:03:15 by jna              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**get_cmds(int end, char *argv[]);
 int		**get_fds(int size);
 int		get_size_char_arr2(char **arr2);
 
-int		pipex(t_info infos, char *envp[]);
+void	pipex(t_info infos, char *envp[]);
 void	read_input_from_infile(int fd_infile);
 void	send_output_as_input(t_info *infos, int idx, char *envp[]);
 void	execve_cmd(char *cmd, char **paths, char *envp[]);
