@@ -1,37 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jna <jna@student.42seoul.kr>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/16 20:18:00 by jna               #+#    #+#             */
+/*   Updated: 2021/10/16 20:18:00 by jna              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
-
-int	pipex(t_info infos, char *envp[])
-{
-	int	i;
-
-	i = 0;
-	dup2(infos.fd_infile, STDIN_FILENO);
-	while (infos.cmds[i])
-	{
-		if (infos.cmds[i + 1] == NULL)
-		{
-			infos.fds[i][0] = 0;
-			infos.fds[i][1] = infos.fd_outfile;
-		}
-		else
-		{
-			if (pipe(infos.fds[i]) < 0)
-			return (-1);
-		}
-		if(set_stdout_from_cmd(infos.cmds[i], &infos, i, envp) < 0)
-			return (-1);
-		i++;
-	}
-	return (0);
-}
 
 int main(int argc, char *argv[], char *envp[])
 {
 	t_info	infos;
 
+	check_argc(argc, 5, 0);
 	infos = set_infos(argc, argv, envp);
-	if (pipex(infos, envp) < 0)
-	 	return (0);
+	pipex(infos, envp);
+	free_infos(&infos);
 	return (0);
 }
 
+int	pipex(t_info infos, char *envp[])
+{
+	int	i;
+	int	size;
+
+	i = 0;
+	size = get_size_char_arr2(infos.cmds);
+	read_input_from_infile(infos.fd_infile);
+	while (i < size - 1)
+	{
+		if (pipe(infos.fds[i]) < 0)
+		{
+			perror("Fail to pipe().\n");
+			exit(-1);
+		}
+		send_output_as_input(&infos, i, envp);
+		i++;
+	}
+	save_output_to_outfile(infos.fds[i], infos.fd_outfile);
+	set_stdout_from_cmd(&infos, i, envp);
+}

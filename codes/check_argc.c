@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_fds.c                                          :+:      :+:    :+:   */
+/*   check_argc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jna <jna@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/16 00:15:25 by jna               #+#    #+#             */
-/*   Updated: 2021/10/16 16:12:52 by jna              ###   ########.fr       */
+/*   Created: 2021/10/16 21:33:01 by jna               #+#    #+#             */
+/*   Updated: 2021/10/16 21:33:01 by jna              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	**set_fds(char **cmds)
+void    check_argc(int argc, int min, int max)
 {
-	int	size;
-	int	**fds;
-	int	i;
-
-	size = 0;
-	while (cmds[size])
-		size++;
-	fds = (int **)malloc(sizeof(int *) * size);
-	if (!fds)
-		exit (0);
-	i = 0;
-	while (cmds[i])
-	{
-		fds[i] = (int *)malloc(sizeof(int) * 2);
-		if (!fds[i])
-			exit (0);
-		i++;
-	}
-	return (fds);
+    if (min != 0)
+    {
+        if (argc < min)
+        {
+            write(STDERR_FILENO, "Arguments too few.\n", 20);
+            exit(-1);
+        }
+    }
+    if (max != 0)
+    {
+        if (argc > max)
+        {
+            write(STDERR_FILENO, "Arguments too many.\n", 20);
+            exit(-1);
+        }
+    }
 }

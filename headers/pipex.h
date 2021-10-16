@@ -13,11 +13,10 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include <stdio.h>
-# include <sys/types.h>
-# include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <fcntl.h>
+# include <unistd.h>
 # include "../libft/libft.h"
 
 # define READ 0
@@ -27,15 +26,26 @@ typedef struct s_info
 {
 	int		fd_infile;
 	int		fd_outfile;
-	char	**cmds;
 	char	**paths;
+	char	**cmds;
 	int		**fds;
 }				t_info;
 
+void	check_argc(int argc, int min, int max);
+
 t_info	set_infos(int argc, char *argv[], char *envp[]);
-int		**set_fds(char **cmds);
-int		set_stdout_from_cmd(char *cmd, t_info *infos, int i, char *envp[]);
-int		get_fd(char *file);
-int		error_msg(char *msg);
+void	set_fd(t_info *infos, char *infile, char *outfile);
+char	**get_paths(char *envp[]);
+char	**get_cmds(int end, char *argv[]);
+int		**get_fds(int size);
+int		get_size_char_arr2(char **arr2);
+
+int		pipex(t_info infos, char *envp[]);
+void	read_input_from_infile(int fd_infile);
+void	send_output_as_input(t_info *infos, int idx, char *envp[]);
+void	execve_cmd(char *cmd, char **paths);
+void	save_output_to_outfile(int *fd, int fd_outfile);
+
+void	free_infos(t_info *infos);
 
 #endif

@@ -17,11 +17,12 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 SRCS = ./codes/pipex.c \
+	   ./codes/check_argc.c \
 	   ./codes/set_infos.c \
-	   ./codes/set_fds.c \
+	   ./codes/get_cmds.c \
+	   ./codes/get_fds.c \
+	   ./codes/free_infos.c \
 	   ./codes/set_stdout_from_cmd.c \
-	   ./codes/get_fd.c \
-	   ./codes/error_msg.c
 
 INCLUDE = ./headers
 

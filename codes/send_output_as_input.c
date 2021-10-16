@@ -12,37 +12,62 @@
 
 #include "pipex.h"
 
-int	set_stdout_from_cmd(char *cmd, t_info *infos, int idx, char *envp[])
+void	read_input_from_infile(int fd_infile)
+{
+	if (dup2(fd_infile, STDIN_FILENO) < 0)
+	{
+		perror("Fail to dup2().\n");
+		exit(-1);
+	}
+}
+
+void	save_output_to_outfile(int *fd, int fd_outfile)
+{
+	fd[READ] = 0;
+	fd[WRITE] = fd_outfile;
+}
+
+void	send_output_as_input(t_info *infos, int idx, char *envp[]);
 {
 	pid_t	pid;
-	int		i;
-	char	**cmds;
-	char	*path;
 
 	if ((pid = fork()) < 0)
-		return (error_msg("[ERROR] Fail to fork()\n"));
+	{
+		perror("Fail to fork().\n");
+		exit(-1);
+	}
 	if (pid == 0)
 	{
-		dup2(infos->fds[idx][1], STDOUT_FILENO);
-		if (!ft_strchr(cmd, ' '))
-			cmd = ft_strjoin(cmd, " ");
-		cmds = ft_split(cmd, ' ');
-		
-		i = 0;
-		while (infos->paths[i])
-		{
-			path = ft_strjoin(infos->paths[i], "/");
-			path = ft_strjoin(path, cmds[0]);
-			execve(path, cmds, envp);
-			i++;
-		}
-		return (-1);
+		close(infos->fds[idx][READ]);
+		dup2(infos->fds[idx][WRITE], STDOUT_FILENO);
+		execve_cmd(infos->cmds[i], infos->paths);
+		exit(-1);
 	}
 	else
 	{
-		close(infos->fds[idx][1]);
-		dup2(infos->fds[idx][0], STDIN_FILENO);
-		close(infos->fds[idx][0]);
+		close(infos->fds[idx][WRITE]);
+		dup2(infos->fds[idx][READ], STDIN_FILENO);
+		close(infos->fds[idx][READ]);
 	}
-	return (1);
 }
+
+void	execve_cmd(char *cmd, char **paths)
+{
+	char	**cmds;
+	char	*path;
+	int		i;
+
+	if (!ft_strchr(cmd, ' '))
+		cmd = ft_strjoin(cmd, " ");
+	cmds = ft_split(cmd, ' ');
+	free(cmd);
+	i = 0;
+	while (paths[i])
+	{
+		path = ft_strjoin(infos->paths[i], "/");
+		path = ft_strjoin(path, cmds[0]);
+		execve(path, cmds, envp);
+		i++;
+	}
+}
+
