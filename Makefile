@@ -30,7 +30,7 @@ SUBDIR = ./libft
 all: $(NAME)
 
 $(NAME): Libft
-		$(CC) $(CFLAGS) $(SRCS) libft/*.c -I $(INCLUDE) -o $(NAME)
+		$(CC) $(SRCS) libft/*.c -I $(INCLUDE) -o $(NAME)
 
 Libft:
 		cd $(SUBDIR); $(MAKE)

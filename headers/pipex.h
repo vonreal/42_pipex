@@ -33,7 +33,6 @@ typedef struct s_info
 }				t_info;
 
 t_info	set_infos(int argc, char *argv[], char *envp[]);
-int		set_stdin_from_infile(char *infile);
 int		**set_fds(char **cmds);
 int		set_stdout_from_cmd(char *cmd, t_info *infos, int i, char *envp[]);
 int		get_fd(char *file);
