@@ -6,7 +6,7 @@
 #    By: jna <jna@student.42seoul.kr>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 15:45:42 by jna               #+#    #+#              #
-#    Updated: 2021/10/16 16:14:20 by jna              ###   ########.fr        #
+#    Updated: 2021/10/17 02:06:05 by jna              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,12 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 SRCS = ./codes/pipex.c \
+	   ./codes/check_argc.c \
 	   ./codes/set_infos.c \
-	   ./codes/set_fds.c \
-	   ./codes/set_stdout_from_cmd.c \
-	   ./codes/get_fd.c \
-	   ./codes/error_msg.c
+	   ./codes/get_cmds.c \
+	   ./codes/get_fds.c \
+	   ./codes/send_output_as_input.c \
+	   ./codes/free_infos.c \
 
 INCLUDE = ./headers
 
@@ -30,7 +31,7 @@ SUBDIR = ./libft
 all: $(NAME)
 
 $(NAME): Libft
-		$(CC) $(SRCS) libft/*.c -I $(INCLUDE) -o $(NAME)
+		$(CC) $(CFLAGS) $(SRCS) libft/*.c -I $(INCLUDE) -o $(NAME)
 
 Libft:
 		cd $(SUBDIR); $(MAKE)

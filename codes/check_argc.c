@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   check_argc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jna <jna@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/23 17:52:34 by jna               #+#    #+#             */
-/*   Updated: 2020/11/25 23:24:28 by jna              ###   ########.fr       */
+/*   Created: 2021/10/16 21:33:01 by jna               #+#    #+#             */
+/*   Updated: 2021/10/17 02:52:10 by jna              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	check_argc(int argc, int min, int max)
 {
-	int	size;
-
-	if (s == NULL)
-		return ;
-	size = ft_strlen(s);
-	write(fd, s, size);
+	if (min != 0)
+	{
+		if (argc < min)
+			exit(0);
+	}
+	if (max != 0)
+	{
+		if (argc > max)
+			exit(0);
+	}
 }
